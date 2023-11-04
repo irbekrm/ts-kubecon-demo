@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cert-manager-metrics-ingress
+  namespace: cert-manager
+  annotations:
+   tailscale.com/hostname: cert-manager-metrics-ingress
+spec:
+  ports:
+  - name: metrics
+    port: 9402
+    protocol: TCP
+    targetPort: 9402
+  selector:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: cert-manager
+    app.kubernetes.io/name: cert-manager
+  type: LoadBalancer
+  LoadBalancerClass: tailscale

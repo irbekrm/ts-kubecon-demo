@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cert-manager-metrics-egress
+  annotations:
+      tailscale.com/tailnet-ip: <METRICS_INGRESS_IP>
+  namespace: monitoring
+spec:
+  ports:
+  - port: 9402
+    protocol: TCP
+    targetPort: 9402
+  externalName: unused
+  type: ExternalName

@@ -609,6 +609,8 @@ metadata:
     app.kubernetes.io/version: 2.47.2
   name: prometheus-k8s
   namespace: monitoring
+  annotations:
+    tailscale.com/expose: "true"
 spec:
   ports:
   - name: web

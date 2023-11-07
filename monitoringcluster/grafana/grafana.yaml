@@ -75,8 +75,6 @@ kind: Service
 metadata:
   name: grafana
   namespace: monitoring
-  annotations:
-    tailscale.com/expose: "true"
 spec:
   ports:
     - port: 3000
@@ -84,5 +82,21 @@ spec:
       targetPort: http-grafana
   selector:
     app: grafana
-  sessionAffinity: None
-  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: monitoring
+  annotations:
+    tailscale.com/funnel: "true"
+spec:
+  defaultBackend:
+    service:
+      name: grafana
+      port:
+        number: 3000
+  ingressClassName: tailscale
+  tls:
+  - hosts:
+    - grafana
